@@ -25,8 +25,8 @@ class CreateRequest extends FormRequest
     {
         return [
             'client_id' => 'required|exists:users,id',
-            'name' => 'required|string|max:100',
-            'prefix' => 'required|string|max:100',
+            'name' => 'required|string|max:150',
+            'prefix' => 'required|string|max:8',
             'color' => 'required|string',
             'users' => 'required|array',
         ];

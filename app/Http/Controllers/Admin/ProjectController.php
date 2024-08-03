@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Project\CreateRequest;
 use App\Http\Requests\Admin\Project\UpdateRequest;
 use App\Http\Resources\Admin\Project\ProjectResource;
+use App\Http\Resources\Admin\Project\UsersOptionResource;
 use App\Repositories\Contracts\ProjectRepositoryInterface;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -92,5 +93,23 @@ class ProjectController extends Controller
 
         $this->repository->delete($id);
         return response()->json(null, 204);
+    }
+
+    public function clients(): AnonymousResourceCollection
+    {
+        return UsersOptionResource::collection($this->repository->clients())
+            ->additional([
+                'success' => true,
+                'message' => __('messages.fetched'),
+            ]);
+    }
+
+    public function users(): AnonymousResourceCollection
+    {
+        return UsersOptionResource::collection($this->repository->users())
+            ->additional([
+                'success' => true,
+                'message' => __('messages.fetched'),
+            ]);
     }
 }

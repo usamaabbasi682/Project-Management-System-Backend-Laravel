@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ProjectRepositoryInterface;
@@ -81,5 +82,15 @@ class ProjectRepository implements ProjectRepositoryInterface
         $project = Project::findOrFail($id);
         $project->users()->detach();
         $project->delete();
+    }
+
+    public function clients() {
+        $clients = User::select('id','name')->role('client')->orderBy('name','ASC')->get();   
+        return $clients;
+    }
+
+    public function users() {
+        $users = User::select('id','name')->role('user')->orderBy('name','ASC')->get();   
+        return $users;
     }
 }

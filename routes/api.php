@@ -10,7 +10,9 @@ require __DIR__.'/auth.php';
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/clients/departments', [ClientController::class, 'departments']);
+    Route::get('/department/options', [ClientController::class, 'departments']);
+    Route::get('/client/options', [ProjectController::class, 'clients']);
+    Route::get('/users/options', [ProjectController::class, 'users']);
     
     Route::apiResource('departments', DepartmentController::class);
     Route::apiResource('clients', ClientController::class);

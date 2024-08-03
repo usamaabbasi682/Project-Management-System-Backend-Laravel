@@ -12,4 +12,6 @@ interface ProjectRepositoryInterface
     public function suggestStatusColor(string $status);
     public function update(Request $request, $id);
     public function delete($id);
+    public function clients();
+    public function users();
 }
