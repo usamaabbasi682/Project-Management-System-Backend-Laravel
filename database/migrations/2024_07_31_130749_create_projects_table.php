@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('prefix');
             $table->string('color',20);
-            $table->integer('budget')->nullable(true);
+            $table->string('budget')->nullable(true);
             $table->enum('budget_type', ['fixed', 'hourly'])->nullable(true);
             $table->string('currency',20)->nullable(true);
-            $table->string('description')->nullable(true);
+            $table->text('description')->nullable(true);
             $table->enum('status',['archived','finished','ongoing','onhold'])->default('onhold');
             $table->string('status_color',20)->nullable(true);
             $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade');

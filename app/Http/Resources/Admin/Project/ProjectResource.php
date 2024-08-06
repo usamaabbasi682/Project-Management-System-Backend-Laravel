@@ -19,7 +19,12 @@ class ProjectResource extends JsonResource
         return $this->resource ? [
             'id' => $this->id ?? '',
             'client' => $this->client->name ?? '',
+            'client_id' => $this->client_id ?? '',
             'name' => $this->name ?? '',
+            'budget' => $this->budget ?? '',
+            'budget_type' => $this->budget_type ?? '',
+            'currency' => $this->currency ?? '',
+            'description' => $this->description ?? '',
             'prefix' => $this->prefix ?? '',
             'status' => $this->status ?? '',
             'status_color' => $this->status_color ?? '',

@@ -28,7 +28,7 @@ class UpdateRequest extends FormRequest
             'name' => 'required|string|max:100',
             'prefix' => 'required|string|max:100',
             'color' => 'required|string',
-            'budget' => 'required|numeric',
+            'budget' => 'required|string',
             'budget_type' => 'required|in:fixed,hourly',
             'currency' => 'required|in:USD,EUR,GBP,INR,AUD,CAD',
             'description' => 'nullable|string',
