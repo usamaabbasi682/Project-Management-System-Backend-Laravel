@@ -8,8 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Project\CreateRequest;
 use App\Http\Requests\Admin\Project\UpdateRequest;
 use App\Http\Resources\Admin\Project\ProjectResource;
+use App\Http\Requests\Admin\Project\FileUploadRequest;
 use App\Http\Resources\Admin\Project\UsersOptionResource;
 use App\Repositories\Contracts\ProjectRepositoryInterface;
+use App\Http\Resources\Admin\Project\ProjectDetailResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProjectController extends Controller
@@ -50,14 +52,14 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id): ProjectResource
+    public function show(int $id): ProjectDetailResource
     {
         if (!$this->repository->getById($id)) {
-            return ProjectResource::make(null)
+            return ProjectDetailResource::make(null)
                 ->additional(['success' => false, 'message' =>  __('messages.not_found')]);
         }
 
-        return ProjectResource::make($this->repository->getById($id))
+        return ProjectDetailResource::make($this->repository->getById($id))
             ->additional([
                 'success' => true,
                 'message' => __('messages.retrieved'),
@@ -111,5 +113,37 @@ class ProjectController extends Controller
                 'success' => true,
                 'message' => __('messages.fetched'),
             ]);
+    }
+
+    public function uploadFile(FileUploadRequest $request, $id): JsonResponse
+    {
+        $result = $this->repository->uploadFile($request,$id);
+        if ($request) {
+            return response()->json([
+                'success' => true,
+                'message' => __('messages.uploaded'),
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => __('messages.not_uploaded'),
+            ]);
+        }
+    }
+
+    public function deleteFile($projectId,$fileId): JsonResponse 
+    {
+        $result = $this->repository->deleteFile($projectId,$fileId);
+        if ($result) {
+            return response()->json([
+                'success' => true,
+                'message' => __('messages.deleted'),
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => __('messages.not_deleted'),
+            ]);
+        }
     }
 }

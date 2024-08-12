@@ -15,4 +15,6 @@ return [
     'login_success' => 'Login successfully',
     'email_or_password' => 'Email or Password is incorrect',
     'something_went_wrong' => 'Something went wrong, please try again later',
+    'uploaded' => 'Uploaded successfully',
+    'not_uploaded' => 'Not uploaded',
 ];

@@ -13,6 +13,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/department/options', [ClientController::class, 'departments']);
     Route::get('/client/options', [ProjectController::class, 'clients']);
     Route::get('/users/options', [ProjectController::class, 'users']);
+    Route::post('/projects/{project}/file', [ProjectController::class, 'uploadFile']);
+    Route::delete('/projects/{project}/files/{file}', [ProjectController::class, 'deleteFile']);
     
     Route::apiResource('departments', DepartmentController::class);
     Route::apiResource('clients', ClientController::class);

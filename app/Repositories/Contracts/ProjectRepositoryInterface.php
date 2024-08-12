@@ -14,4 +14,6 @@ interface ProjectRepositoryInterface
     public function delete($id);
     public function clients();
     public function users();
+    public function uploadFile(Request $request, $id);
+    public function deleteFile($projectId,$fileId);
 }

@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Services\FileUploadService;
 use App\Repositories\Contracts\ProjectRepositoryInterface;
 
 class ProjectRepository implements ProjectRepositoryInterface
@@ -81,6 +82,7 @@ class ProjectRepository implements ProjectRepositoryInterface
     {
         $project = Project::findOrFail($id);
         $project->users()->detach();
+        $project->files()->delete();
         $project->delete();
     }
 
@@ -92,5 +94,34 @@ class ProjectRepository implements ProjectRepositoryInterface
     public function users() {
         $users = User::select('id','name')->role('user')->orderBy('name','ASC')->get();   
         return $users;
+    }
+
+    public function uploadFile(Request $request, $id) {
+        try {
+            $project = Project::find($id);
+            if ($request->hasFile('documents')) {
+                foreach ($request->file('documents') as $document) {
+                    $document = FileUploadService::upload($document, $path = '/public/projects');
+                    $project->files()->create(['url' =>  $document->uploaded_path.'/'.$document->uploaded_name]);
+                }
+                return true;
+            }
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function deleteFile($projectId,$fileId) {
+        try {
+            $project = Project::find($projectId);
+            if ($project->files()->where('id', $fileId)->exists()) {
+                $files  = $project->files();
+                FileUploadService::delete('public'.$files->firstWhere('id', $fileId)->url);
+                $files->where('id', $fileId)->delete();
+            }
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }
