@@ -13,13 +13,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $users=User::factory(15)->create();
-        $users->each(function ($user) {
-            $user->assignRole('user');
-        });
-
+        $users = User::factory(15)->create();
+        $tags = Tag::factory(15)->create();
+        
         $this->call([
             UserSeeder::class,
         ]);
+
+        $users->each(function ($user) {
+            $user->assignRole('user');
+        });
     }
 }
