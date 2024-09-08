@@ -146,4 +146,23 @@ class TaskController extends Controller
         $this->repository->deleteComment($project,$taskId,$commentId);
         return response()->json(null, 204);
     }
+
+    public function deleteTaskFile(Project $project, $taskId, $fileId): JsonResponse 
+    {
+        if (!$this->repository->getById($project,$taskId)) {
+            return response()->json(null, 404);
+        }
+        $result = $this->repository->deleteTaskFile($project,$taskId,$fileId);
+        if ($result) {
+            return response()->json([
+                'success' => true,
+                'message' => __('messages.deleted'),
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => __('messages.not_deleted'),
+            ]);
+        }
+    }
 }

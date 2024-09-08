@@ -14,15 +14,15 @@ class TaskResource extends JsonResource
     {
         switch ($this->priority) {
             case 'highest':
-                return '#ff0000';
+                return '#990e0e';
             case 'high':
-                return '#ffa500 ';
+                return '#cc9022 ';
             case'medium':
-                return '#ffff00';
+                return '#9b9b04';
             case 'low':
-                return'#008000';
+                return'#0f490f';
             case 'lowest':
-                return '#808080';
+                return '#6d6464';
             default:
                 return '#0000ff';
         }

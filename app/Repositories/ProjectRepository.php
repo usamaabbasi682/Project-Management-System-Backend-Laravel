@@ -13,9 +13,28 @@ class ProjectRepository implements ProjectRepositoryInterface
     public function getAll(Request $request) 
     {
         $query = Project::query();
+
         $query->when($request->has('search'), function ($query) use($request) {
             $query->where('name', 'like', '%' . $request->input('search') . '%');
         });
+
+        $query->when($request->has('projects') || ($request->has('client') && $request->get('client') != 'all'), function ($query) use($request) {
+            $query->where(function ($query) use($request) {
+                if($request->has('projects')) {
+                    $query->where('client_id', auth('sanctum')->id());
+                    if ($request->has('client') && $request->get('client') != 'all') {
+                        $query->orWhere('client_id', $request->input('client'));
+                    }
+                } else {
+                    $query->where('client_id', $request->input('client'));
+                }
+            });
+        });
+
+        $query->when($request->has('status') && $request->get('status') != 'all', function ($query) use($request) {
+             $query->where('status', $request->input('status'));
+        });
+        
         $projects = $query->orderBy('id','DESC')->paginate(12);
         return $projects;
     }

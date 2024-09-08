@@ -15,4 +15,5 @@ interface TaskRepositoryInterface
     public function createComment(Request $request,$project, $taskId);
     public function deleteComment($project,$taskId,$commentId);
     public function updateComment(Request $request,$project,$taskId,$commentId);
+    public function deleteTaskFile($project,$taskId,$fileId);
 }

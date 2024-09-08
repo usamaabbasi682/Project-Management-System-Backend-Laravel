@@ -15,10 +15,12 @@ class Task extends Model
 
     protected $fillable = [
         'project_id',
+        'status_id',
         'title',
         'description',
         'due_date',
         'estimated_time',
+        'estimated_time_type',
         'time_type',
         'priority',
     ];
@@ -48,6 +50,11 @@ class Task extends Model
     public function comments(): MorphMany
     {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(Status::class, 'status_id');
     }
     
     /* End Relationships */

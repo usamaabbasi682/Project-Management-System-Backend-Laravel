@@ -65,6 +65,7 @@ class TaskRepository implements TaskRepositoryInterface
         
         $task->update(
             $request->safe()->only([
+                'status_id',
                 'title',
                 'description',
                 'due_date',
@@ -143,6 +144,22 @@ class TaskRepository implements TaskRepositoryInterface
         $comment = $task->comments()->find($commentId);
         if ($comment != null && $comment->user_id == auth()->user()->id) {
             $comment->delete();   
+        }
+    }
+
+    public function deleteTaskFile($project,$taskId,$fileId) 
+    {
+        try {
+            $task = $project->tasks()->find($taskId);
+            $file = $task->files()->find($fileId);
+            if ($file != null) {
+                $url = $file->url;
+                FileUploadService::delete('public'.$url);
+                $file->delete();
+            }
+            return true;
+        } catch (\Exception $e) {
+            return false;
         }
     }
 }

@@ -4,9 +4,11 @@ namespace App\Http\Resources\Admin\Project\Task;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Resources\Admin\Tag\TagResource;
 use App\Http\Resources\Admin\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Admin\Project\FilesResource;
+use App\Http\Resources\Admin\Project\Task\Status\StatusOptionResource;
 
 class TaskDetailResource extends JsonResource
 {
@@ -50,11 +52,17 @@ class TaskDetailResource extends JsonResource
             'started_at' => $this->created_at->format('d M, Y'),
             'created_on' => $this->created_at->format('d-m-Y'),
             'due_date' => $dueDate->format('d M, Y'),
+            'edit_due_date' => $dueDate->format('Y-m-d'),
             'modified_priority' => ucfirst($this->priority),
+            'priority' => $this->priority,
             'priority_color' => $this->priorityColor($this->priority),
             'task_duration' => $this->created_at->diffForHumans($dueDate, ['parts' => 2]),
             'users' => UserResource::collection($this->users),
+            'tags' => TagResource::collection($this->tags),
             'files' => FilesResource::collection($this->files),
+            'estimated_time' => $this->estimated_time,
+            'estimate_time_type' => $this->time_type,
+            'status' => new StatusOptionResource($this->status),
         ] : null;
     }
 }
