@@ -27,9 +27,10 @@ class StatusRepository implements StatusRepositoryInterface
 
     public function create(Request $request) 
     {
-        $status = Status::create(
-            $request->only(['name', 'order'])
-        );
+        $status = Status::create([
+            'name' => strtolower($request->name),
+            'order' => $request->order,
+        ]);
         return $status;
     }
 

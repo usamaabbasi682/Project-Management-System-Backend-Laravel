@@ -143,4 +143,9 @@ class ProjectRepository implements ProjectRepositoryInterface
             return false;
         }
     }
+
+    public function projects() {
+        $projects = Project::selectRaw('name,id')->get();
+        return $projects;
+    }
 }

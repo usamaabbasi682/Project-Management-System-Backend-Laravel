@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,6 +25,11 @@ class Task extends Model
         'time_type',
         'priority',
     ];
+
+    public function scopeWhereProject(Builder $query,$projectId): void
+    {
+        $query->where('project_id', $projectId);
+    }
 
     /* Start Relationships */
 

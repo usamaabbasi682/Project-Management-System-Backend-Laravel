@@ -12,6 +12,7 @@ use App\Http\Requests\Admin\Project\FileUploadRequest;
 use App\Http\Resources\Admin\Project\UsersOptionResource;
 use App\Repositories\Contracts\ProjectRepositoryInterface;
 use App\Http\Resources\Admin\Project\ProjectDetailResource;
+use App\Http\Resources\Admin\Project\ProjectOptionsResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProjectController extends Controller
@@ -145,5 +146,15 @@ class ProjectController extends Controller
                 'message' => __('messages.not_deleted'),
             ]);
         }
+    }
+
+    public function projects(): AnonymousResourceCollection 
+    {
+        $options = $this->repository->projects();
+        return ProjectOptionsResource::collection($options)
+            ->additional([
+                'success' => true,
+                'message' => __('messages.fetched'),
+            ]);
     }
 }

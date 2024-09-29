@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         
         $this->call([
             UserSeeder::class,
+            StatusSeeder::class,
         ]);
 
         $users->each(function ($user) {

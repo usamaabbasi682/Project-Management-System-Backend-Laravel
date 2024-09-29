@@ -16,8 +16,8 @@ class StatusResource extends JsonResource
     {
         return $this->resource ? [
             'id' => $this->id,
-            'name' => $this->name,
-            'order' => $this->order,
+            'name' => ucfirst($this->name),
+            'allow_delete' => $this->allow_delete == 1 ? (boolean)true : (boolean)false,
             'created_at' => $this->created_at->format('d M Y'),
         ] : null;
     }

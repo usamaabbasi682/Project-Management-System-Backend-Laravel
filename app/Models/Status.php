@@ -13,6 +13,7 @@ class Status extends Model
     protected $fillable = [
         'name',
         'order',
+        'allow_delete',
     ];
 
     /* Start Relationships */

@@ -8,12 +8,14 @@ use App\Repositories\ClientRepository;
 use App\Repositories\StatusRepository;
 use App\Repositories\ProjectRepository;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\TaskBoardRepository;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\Contracts\TagRepositoryInterface;
 use App\Repositories\Contracts\TaskRepositoryInterface;
 use App\Repositories\Contracts\ClientRepositoryInterface;
 use App\Repositories\Contracts\StatusRepositoryInterface;
 use App\Repositories\Contracts\ProjectRepositoryInterface;
+use App\Repositories\Contracts\TaskBoardRepositoryInterface;
 use App\Repositories\Contracts\DepartmentRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -46,6 +48,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             StatusRepositoryInterface::class,
             StatusRepository::class
+        );
+        $this->app->bind(
+            TaskBoardRepositoryInterface::class,
+            TaskBoardRepository::class
         );
     }
 
