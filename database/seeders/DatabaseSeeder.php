@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::factory(15)->create();
+        $users = User::factory(6)->create();
         // $tags = Tag::factory(15)->create();
         
         $this->call([

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Admin\Client;
+namespace App\Http\Requests\Admin\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateRequest extends FormRequest
+class CreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,16 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'department' => 'required|integer|exists:departments,id',
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,'.$this->client,
-            'website' => 'nullable|url|max:255',
-            'password' => 'nullable',
+            'phone' => 'nullable|numeric',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'nullable|string|min:8',
+            'password_confirmation'=> 'nullable|same:password',
+            'projects' => 'nullable|array',
+            'role' => 'required|string',
+            'status' => 'required|in:1,0',
             'profile' => 'nullable|image|mimes:jpeg,png,jpg',
+            'salary' => 'nullable|numeric',
         ];
     }
 

@@ -32,7 +32,7 @@ class ClientRepository implements ClientRepositoryInterface
     public function create(Request $request) 
     {
         try {
-            $password = $request->input('password') != '' ? Hash::make($request->input('password')) : null;
+            $password = ($request->input('password') != '' && $request->input('client_panel') == 1) ? Hash::make($request->input('password')) : null;
             $client = User::create([
                 'department_id' => $request->input('department'),
                 'name' => $request->input('name'),
@@ -56,8 +56,8 @@ class ClientRepository implements ClientRepositoryInterface
     public function update(Request $request, $id) 
     {
         try {
-            $password = $request->input('password') != '' ? Hash::make($request->input('password')) : null;
             $client = User::find($id);
+            $password = $request->input('password') != '' ? Hash::make($request->input('password')) : $client->password;
             $client->update([
                 'department_id' => $request->input('department'),
                 'name' => $request->input('name'),

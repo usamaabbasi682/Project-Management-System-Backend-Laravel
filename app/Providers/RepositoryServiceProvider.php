@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Repositories\TagRepository;
 use App\Repositories\TaskRepository;
+use App\Repositories\UserRepository;
 use App\Repositories\ClientRepository;
 use App\Repositories\StatusRepository;
 use App\Repositories\ProjectRepository;
@@ -12,6 +13,7 @@ use App\Repositories\TaskBoardRepository;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\Contracts\TagRepositoryInterface;
 use App\Repositories\Contracts\TaskRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Contracts\ClientRepositoryInterface;
 use App\Repositories\Contracts\StatusRepositoryInterface;
 use App\Repositories\Contracts\ProjectRepositoryInterface;
@@ -52,6 +54,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             TaskBoardRepositoryInterface::class,
             TaskBoardRepository::class
+        );
+        $this->app->bind(
+            UserRepositoryInterface::class,
+            UserRepository::class
         );
     }
 

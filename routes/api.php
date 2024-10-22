@@ -4,11 +4,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\TaskController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\StatusController;
 use App\Http\Controllers\Admin\ProjectController;
-use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\TaskBoardController;
+use App\Http\Controllers\Admin\DepartmentController;
 
 require __DIR__.'/auth.php';
 
@@ -43,4 +44,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('projects', ProjectController::class);
     Route::apiResource('projects.tasks', TaskController::class);
     Route::apiResource('statuses', StatusController::class);
+    Route::apiResource('users', UserController::class);
 });

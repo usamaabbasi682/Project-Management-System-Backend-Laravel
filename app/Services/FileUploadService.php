@@ -36,7 +36,6 @@ class FileUploadService
             if (Storage::exists($path)) {
                 Storage::delete($path);
             }
-
             return true;
 
         } catch (Exception $exception) {
