@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ClientController;
@@ -45,4 +46,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('projects.tasks', TaskController::class);
     Route::apiResource('statuses', StatusController::class);
     Route::apiResource('users', UserController::class);
+    Route::apiResource('roles', RoleController::class);
 });

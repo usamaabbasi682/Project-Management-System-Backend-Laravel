@@ -4,7 +4,7 @@ namespace App\Repositories\Contracts;
 
 use Illuminate\Http\Request;
 
-interface UserRepositoryInterface
+interface RoleRepositoryInterface
 {
     public function getAll(Request $request);
     public function getById($id);

@@ -4,28 +4,26 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\User\CreateRequest;
-use App\Http\Requests\Admin\User\UpdateRequest;
-use App\Http\Resources\Admin\User\UserListsResource;
-use App\Repositories\Contracts\UserRepositoryInterface;
-use App\Http\Resources\Admin\User\UserListDetailResource;
+use App\Http\Requests\Admin\Role\CreateRequest;
+use App\Http\Requests\Admin\Role\UpdateRequest;
+use App\Http\Resources\Admin\Role\RoleResource;
+use App\Repositories\Contracts\RoleRepositoryInterface;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-class UserController extends Controller
+class RoleController extends Controller
 {
-    protected UserRepositoryInterface $userRepository;
-
-    public function __construct(UserRepositoryInterface $userRepository) 
+    protected RoleRepositoryInterface $repository;
+    public function __construct(RoleRepositoryInterface $repository)
     {
-        $this->userRepository = $userRepository;
+        $this->repository = $repository;
     }
-
+    
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request): AnonymousResourceCollection
     {
-        return UserListsResource::collection($this->userRepository->getAll($request))
+        return RoleResource::collection($this->repository->getAll($request))
             ->additional([
                 'success' => true,
                 'message' => __('messages.fetched'),
@@ -35,28 +33,28 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateRequest $request):UserListsResource
+    public function store(CreateRequest $request): RoleResource
     {
-        $user = $this->userRepository->create($request);
-        
-        return UserListsResource::make($user->refresh())
-        ->additional([
-            'success' => true,
-            'message' => __('messages.created'),
-        ]);
+        $role = $this->repository->create($request);
+
+        return RoleResource::make($role->refresh())
+            ->additional([
+                'success' => true,
+                'message' => __('messages.created'),
+            ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(int $id): UserListDetailResource
+    public function show(string $id): RoleResource
     {
-        if (!$this->userRepository->getById($id)) {
-            return UserListDetailResource::make(null)
+        if (!$this->repository->getById($id)) {
+            return RoleResource::make(null)
                 ->additional(['success' => false, 'message' =>  __('messages.not_found')]);
         }
 
-        return UserListDetailResource::make($this->userRepository->getById($id))
+        return RoleResource::make($this->repository->getById($id))
             ->additional([
                 'success' => true,
                 'message' => __('messages.retrieved'),
@@ -66,15 +64,15 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, string $id): UserListDetailResource
+    public function update(UpdateRequest $request, string $id): RoleResource
     {
-        if (!$this->userRepository->getById($id)) {
-            return UserListDetailResource::make(null)
+        if (!$this->repository->getById($id)) {
+            return RoleResource::make(null)
                 ->additional(['success' => false, 'message' => __('messages.not_found')]);
         }
 
-        $user = $this->userRepository->update($request,$id);
-        return UserListDetailResource::make($user->refresh())
+        $role = $this->repository->update($request,$id);
+        return RoleResource::make($role->refresh())
             ->additional([
                 'success' => true,
                 'message' => __('messages.updated'),
@@ -86,10 +84,11 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        if (!$this->userRepository->getById($id)) {
+        if (!$this->repository->getById($id)) {
             return response()->json(null, 404);
         }
-        $result = $this->userRepository->delete($id);
+
+        $result = $this->repository->delete($id);
         if ($result) {
             return response()->json([
                 'success' => true,

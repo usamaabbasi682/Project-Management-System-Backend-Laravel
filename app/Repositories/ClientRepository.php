@@ -39,6 +39,7 @@ class ClientRepository implements ClientRepositoryInterface
                 'email' => $request->input('email'),
                 'website' => $request->input('website'),
                 'password' => $password,
+                'status' => '1',
             ]);
             $client->assignRole('client');
 

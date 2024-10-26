@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Repositories\TagRepository;
+use App\Repositories\RoleRepository;
 use App\Repositories\TaskRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\ClientRepository;
@@ -12,6 +13,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Repositories\TaskBoardRepository;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\Contracts\TagRepositoryInterface;
+use App\Repositories\Contracts\RoleRepositoryInterface;
 use App\Repositories\Contracts\TaskRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Contracts\ClientRepositoryInterface;
@@ -58,6 +60,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             UserRepositoryInterface::class,
             UserRepository::class
+        );
+        $this->app->bind(
+            RoleRepositoryInterface::class,
+            RoleRepository::class
         );
     }
 

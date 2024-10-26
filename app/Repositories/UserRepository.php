@@ -11,7 +11,7 @@ use App\Repositories\Contracts\UserRepositoryInterface;
 
 class UserRepository implements UserRepositoryInterface
 {
-    public function getAll()
+    public function getAll(Request $request)
     {
         $query=User::withCount(['projects','tasks' => function($query) {
             $query->whereHas('status', function ($innerQuery) {
@@ -19,10 +19,14 @@ class UserRepository implements UserRepositoryInterface
             });
         }]);
 
-        $query->when(request()->has('search'), function ($query) {
-            $query->where('name', 'like', '%' . request()->input('search') . '%');
+        $query->when($request->has('search'), function ($query) use($request) {
+            $query->where('name', 'like', '%' . $request->input('search') . '%');
         });
         
+        $query->when($request->has('status'),function($query) use($request) {
+            $query->where('status',$request->input('status'));
+        });
+
         $query = $query->role(['user','admin'])->paginate(12);
 
         return $query;
